@@ -24,8 +24,8 @@ my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT
 
 # Convert the Snowflake Dataframe to a pandas Dataframe so we can use the LOC function
 pd_df = my_dataframe.to_pandas()
-st.dataframe(pd_df)
-st.stop()
+# st.dataframe(pd_df)
+# st.stop()
 
 ingredients_list = st.multiselect(
     'Choose up to 5 ingredients:',
@@ -38,6 +38,9 @@ if ingredients_list:
 
     for fruit_chose in ingredients_list:
         ingredients_string += fruit_chose + ' '
+
+        search_on=pd_df.loc[pd_df['FRUIT_NAME'] == fruit_chosen, 'SEARCH_ON'].iloc[0]
+        st.write('The search value for ', fruit_chosen,' is ', search_on, '.')
 
     # st.write(ingredients_string)
 
